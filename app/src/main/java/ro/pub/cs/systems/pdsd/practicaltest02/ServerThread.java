@@ -38,8 +38,8 @@ public class ServerThread extends Thread{
                 Log.i(Constants.TAG, "[SERVER THREAD] Waiting for a client invocation...");
                 Socket socket = serverSocket.accept();
                 Log.i(Constants.TAG, "[SERVER THREAD] A connection request was received from " + socket.getInetAddress() + ":" + socket.getLocalPort());
-               // CommunicationThread communicationThread = new CommunicationThread(this, socket);
-               // communicationThread.start();
+                CommunicationThread communicationThread = new CommunicationThread(socket);
+                communicationThread.start();
             }
         } catch (ClientProtocolException clientProtocolException) {
             Log.e(Constants.TAG, "[SERVER THREAD] An exception has occurred: " + clientProtocolException.getMessage());

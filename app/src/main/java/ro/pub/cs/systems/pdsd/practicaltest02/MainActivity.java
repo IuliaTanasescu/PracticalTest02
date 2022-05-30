@@ -55,6 +55,33 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.client_connect_button:
                 {
+                    String clientAddress = client_address_edit_text.getText().toString();
+                    String clientPort = client_port_edit_text.getText().toString();
+
+                    if (clientAddress == null || clientAddress.isEmpty()
+                            || clientPort == null || clientPort.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "[MAIN ACTIVITY] Client connection parameters should be filled!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (serverThread == null || !serverThread.isAlive()) {
+                        Toast.makeText(getApplicationContext(), "[MAIN ACTIVITY] There is no server to connect to!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    String word = word_edit_text.getText().toString();
+                    if (word == null || word.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "[MAIN ACTIVITY] Parameters from client (city / information type) should be filled", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    definition_text_view.setText(Constants.EMPTY_STRING);
+
+                    clientThread = new ClientThread(
+                            clientAddress, Integer.parseInt(clientPort), word, definition_text_view
+                    );
+                    clientThread.start();
+
                     break;
                 }
             }
